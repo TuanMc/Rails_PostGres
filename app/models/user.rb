@@ -1,8 +1,10 @@
 class User < ApplicationRecord
+    VALID_EMAIL_REGEX = /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+
     has_many:microposts
-    validates :name, presence: true    # Replace FILL_IN with the right code.
+    validates :name, presence: true
     validates :email, format: { 
-        with: URI::MailTo::EMAIL_REGEXP,
+        with: VALID_EMAIL_REGEX,
         message: 'is not valid'
         }, presence: true
 end
