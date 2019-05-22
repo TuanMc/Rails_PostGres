@@ -1,14 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @micropost.content %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @micropost.user_id %>
-</p>
-
-<%= link_to 'Edit', edit_micropost_path(@micropost) %> |
-<%= link_to 'Back', microposts_path %>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to 'Microposts', microposts_path %></li>
+        <li class="breadcrumb-item active" aria-current="page">Micropost detail</li>
+    </ol>
+</nav>
+<div class="padding-30">
+  <p class="padding-bottom-15">
+      <%= link_to 'Edit micropost 🔧', edit_micropost_path(@micropost) %>
+  </p>
+  <p id="notice"><%= notice %></p>
+  <p>
+    <strong>User:</strong>
+    <%= @micropost.user_id %>
+  </p>
+  <p>
+    <strong>Content:</strong>
+    <%= @micropost.content %>
+  </p>
+</div>

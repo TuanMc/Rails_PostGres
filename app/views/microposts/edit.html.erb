@@ -1,6 +1,13 @@
-<h1>Editing Micropost</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><%= link_to 'Microposts', microposts_path %></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit micropost</li>
+    </ol>
+</nav>
 
-<%= render 'form', micropost: @micropost %>
-
-<%= link_to 'Show', @micropost %> |
-<%= link_to 'Back', microposts_path %>
+<div class="padding-30">
+    <p class="padding-bottom-15">
+        <%= link_to 'Show micropost detail ✏️', @micropost %>
+    </p>
+    <%= render 'form', micropost: @micropost %>
+</div>
