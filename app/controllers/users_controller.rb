@@ -4,13 +4,28 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @search_key = params[:key] 
+    p ">>>>>>>>>>>>>>>>> #{@search_key}"
+
+    if @search_key
+      searched_user = User.where("email like ?", "%#{@search_key}%")
+      if searched_user
+        p ">>>>>>>>>>>>>>>>> has user"
+        @users = searched_user
+      else 
+        p ">>>>>>>>>>>>>>>>> user not found"
+        @users = User.all
+      end
+    else
+      p ">>>>>>>>>>>>>>>>>>>> No search"
+      @users = User.all
+    end
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
-    @selectedMicroposts = Micropost.select {|micropost| micropost.user_id == @user.id}
+    @selected_microposts = Micropost.select {|micropost| micropost.user_id == @user.id}
   end
 
   # GET /users/new
@@ -70,6 +85,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password)
+      params.require(:user).permit(:name, :email, :password, :key)
     end
 end

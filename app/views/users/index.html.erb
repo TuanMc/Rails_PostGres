@@ -7,8 +7,18 @@
 
 <div class="padding-30">
   <p id="notice"><%= notice %></p>
+  <div >
   <h1>Users 🕴</h1>
+  
   <div class="margin-top-30">
+    <%= form_tag(users_path, method: :get) do |form| %>
+      <div class="input-group mb-3">
+        <%= text_field_tag (:key), params[:key], class: "form-control", placeholder: "Email..." %>
+        <div class="input-group-append">
+          <%= submit_tag ("Search 🔍 "), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
     <table class="table">
       <thead>
         <tr>
