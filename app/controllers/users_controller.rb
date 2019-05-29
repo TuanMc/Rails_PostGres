@@ -1,23 +1,15 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user! :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
-    @search_key = params[:key] 
-    p ">>>>>>>>>>>>>>>>> #{@search_key}"
+    @search_key = params[:key]&.strip
 
     if @search_key
       searched_user = User.where("email like ?", "%#{@search_key}%")
-      if searched_user
-        p ">>>>>>>>>>>>>>>>> has user"
-        @users = searched_user
-      else 
-        p ">>>>>>>>>>>>>>>>> user not found"
-        @users = User.all
-      end
+      @users = @search_key.present? ? User.where("email like ?", "%#{@search_key}%") : User.all
     else
-      p ">>>>>>>>>>>>>>>>>>>> No search"
       @users = User.all
     end
   end
@@ -25,7 +17,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @selected_microposts = Micropost.select {|micropost| micropost.user_id == @user.id}
+    @selected_microposts = @user.microposts
   end
 
   # GET /users/new
@@ -37,6 +29,10 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def login
+    username = params[:email]
+  end
+  
   # POST /users
   # POST /users.json
   def create
@@ -87,4 +83,10 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password, :key)
     end
+
+    def login_validation (email, password)
+        user = User.find_by(email: email)
+        return true if user && user.auth(password) 
+    end
+  
 end
