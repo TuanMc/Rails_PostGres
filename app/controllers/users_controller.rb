@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
     if @search_key
       searched_user = User.where("email like ?", "%#{@search_key}%")
-      @users = @search_key.present? ? User.where("email like ?", "%#{@search_key}%") : User.all.page(params[:page]).per(5)
+      @users = @search_key.present? ? User.where("email like ?", "%#{@search_key}%").page(params[:page]).per(5) : User.all.page(params[:page]).per(5)
     else
       @users = User.all.page(params[:page]).per(5)
     end
