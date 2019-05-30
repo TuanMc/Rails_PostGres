@@ -1,5 +1,5 @@
 class RegisterController < Devise::RegistrationsController
-    def new
+      def new
         super
       end
     

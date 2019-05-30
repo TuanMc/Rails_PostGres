@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
     has_many:microposts
     validates :name, presence: true
-    validates :email, format: {  # email phai unique
+    validates :email, uniqueness: true, format: {
         with: VALID_EMAIL_REGEX,
         message: 'is not valid'
         }, presence: true
